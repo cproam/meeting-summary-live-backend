@@ -1,0 +1,38 @@
+{
+  "name": "meeting-summary-live-backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/cproam/meeting-summary-live-backend#readme",
+  "bugs": {
+    "url": "https://github.com/cproam/meeting-summary-live-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cproam/meeting-summary-live-backend.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "pkg ."
+  },
+  "dependencies": {
+    "@deepgram/sdk": "^3.12.1",
+    "cross-fetch": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mic": "^2.1.2"
+  },
+  "pkg": {
+    "assets": [
+      ".env"
+    ],
+    "targets": [
+      "node18-win-x64"
+    ],
+    "outputPath": "dist"
+  }
+}
