@@ -30,7 +30,7 @@ const getSummary = async () => {
     const completion = await client.chat.completions.create({
         model: "grok-3-beta",
         messages: [
-            { role: "system", content: `Напиши краткое резюме следующего диалога: ${dialogue}` }
+            { role: "system", content: `${process.env.XAI_INSTRUCTION}: ${dialogue}` }
         ]
     });
     const summary = await completion.choices[0]?.message?.content;
@@ -39,13 +39,12 @@ const getSummary = async () => {
 
 const live = async () => {
     const deepgram = createClient(process.env.DEEPGRAM_API_KEY);
-
     // Create a websocket connection to Deepgram
     const connection = deepgram.listen.live({
-        punctuate: true,
+        // punctuate: true,
         diarize: true,
-        smart_format: true,
-        model: 'nova-2',
+        // smart_format: true,
+        model: process.env.DEEPGRAM_MODEL,
         language: 'ru',
         sample_rate: 44100,
         encoding: 'linear16',
@@ -59,7 +58,6 @@ const live = async () => {
             const speaker = data.channel?.alternatives[0]?.words[0]?.speaker;
             const transcript = data.channel?.alternatives[0]?.transcript;
             if (speaker !== undefined) {
-                // console.log(`Персона ${parseInt(speaker) + 1}: ${transcript}`);
                 const content = `Персона ${parseInt(speaker) + 1}: ${transcript}`;
                 fs.appendFile(`${newFileName}.log`, `${content}\n`, err => {
                     if (err) {
